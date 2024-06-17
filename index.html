@@ -28,36 +28,66 @@
   <button id="startButton">Iniciar Reconhecimento de Voz</button>
   <p id="result">Resultado: <span id="output"></span></p>
 
+  <!-- Incluindo a biblioteca annyang -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
   <script>
-    if (!('webkitSpeechRecognition' in window)) {
-      alert("Seu navegador não suporta a Web Speech API.");
+    // Verificando suporte ao webkitSpeechRecognition
+    if (!('webkitSpeechRecognition' in window) && !annyang) {
+      alert("Seu navegador não suporta a Web Speech API e a biblioteca annyang.");
     } else {
-      const recognition = new webkitSpeechRecognition();
-      recognition.lang = 'pt-BR';
-      recognition.continuous = false;
-      recognition.interimResults = false;
+      if ('webkitSpeechRecognition' in window) {
+        // Usando webkitSpeechRecognition
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'pt-BR';
+        recognition.continuous = false;
+        recognition.interimResults = false;
 
-      recognition.onstart = function() {
-        console.log("Reconhecimento de voz iniciado.");
-      };
+        recognition.onstart = function() {
+          console.log("Reconhecimento de voz iniciado.");
+        };
 
-      recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        document.getElementById('output').textContent = transcript;
-        console.log("Resultado: ", transcript);
-      };
+        recognition.onresult = function(event) {
+          const transcript = event.results[0][0].transcript;
+          document.getElementById('output').textContent = transcript;
+          console.log("Resultado: ", transcript);
+        };
 
-      recognition.onerror = function(event) {
-        console.error("Erro no reconhecimento de voz: ", event.error);
-      };
+        recognition.onerror = function(event) {
+          console.error("Erro no reconhecimento de voz: ", event.error);
+        };
 
-      recognition.onend = function() {
-        console.log("Reconhecimento de voz encerrado.");
-      };
+        recognition.onend = function() {
+          console.log("Reconhecimento de voz encerrado.");
+        };
 
-      document.getElementById('startButton').addEventListener('click', function() {
-        recognition.start();
-      });
+        document.getElementById('startButton').addEventListener('click', function() {
+          recognition.start();
+        });
+
+      } else if (annyang) {
+        // Usando annyang
+        var commands = {
+          '*text': function(text) {
+            document.getElementById('output').textContent = text;
+            console.log("Resultado: ", text);
+          }
+        };
+
+        annyang.addCommands(commands);
+
+        document.getElementById('startButton').addEventListener('click', function() {
+          annyang.start();
+          console.log("Reconhecimento de voz iniciado.");
+        });
+
+        annyang.addCallback('error', function() {
+          console.error("Erro no reconhecimento de voz.");
+        });
+
+        annyang.addCallback('end', function() {
+          console.log("Reconhecimento de voz encerrado.");
+        });
+      }
     }
   </script>
 </body>
