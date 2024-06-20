@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extrair Palavras-chave em Inglês</title>
+</head>
+<body>
+    <h1>Extrair Palavras-chave em Inglês</h1>
+    <textarea id="inputText" rows="6" cols="50" placeholder="Digite sua frase aqui"></textarea><br>
+    <button onclick="extractKeywords()">Extrair Palavras-chave</button><br>
+    <div id="keywordOutput"></div>
+
+    <!-- Script para interação com a API -->
+    <script>
+        function extractKeywords() {
+            const inputText = document.getElementById('inputText').value;
+            const url = `https://api.example.com/extract_keywords?text=${encodeURIComponent(inputText)}`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na requisição HTTP: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayKeywords(data.keywords);
+    })
+    .catch(error => {
+        console.error('Erro ao extrair palavras-chave:', error);
+        // Aqui você pode exibir uma mensagem de erro na interface do usuário, se desejar
+    });
+
+        }
+
+        function displayKeywords(keywords) {
+            const outputDiv = document.getElementById('keywordOutput');
+            outputDiv.innerHTML = `<p><strong>Palavras-chave encontradas:</strong> ${keywords.join(', ')}</p>`;
+        }
+    </script>
+</body>
+</html>

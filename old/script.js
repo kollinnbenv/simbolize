@@ -62,7 +62,7 @@ function buscarPictogramas(frase) {
     pictogramUrls = []; // Limpar o array de URLs antes de adicionar novos pictogramas
     palavras.forEach(palavra => {
         $.ajax({
-            url: "https://api.arasaac.org/v1/pictograms/pt/search/" + palavra,
+            url: "https://api.arasaac.org/v1/pictograms/br/search/" + palavra,
             type: "GET",
             beforeSend: function(xhr) {
                 const token = "SEU_TOKEN_JWT_AQUI";
