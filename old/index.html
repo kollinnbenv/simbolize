@@ -1,52 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gravação de Áudio</title>
-    <link rel="stylesheet" type="text/css" href="styless.css">
-   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reconhecimento de Voz</title>
+  <link rel="stylesheet" href="styless.css">
 </head>
 <body>
-  <nav id='menu'>
-      <input type='checkbox' id='responsive-menu' onclick='updatemenu()'><label></label>
-      <ul>
-          <li><a href='http://'>Home</a></li>
-          <li><a class='dropdown-arrow' href='http://'>Buscar Pictograma</a>
-              <ul class='sub-menus'>
-                  <li><a href='http://'>Microfone</a></li>
-                  <li><a href='http://'>Digitando</a></li>
-              </ul>
-          </li>
-          <li><a href='http://'>Quem somos</a></li>
-          <li><a href='http://'>Entre em contato</a></li>
-      </ul>
-  </nav>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
-  <div class="vertical-container">
-    <div id="pictogramDiv"></div>
-    <div class="centered-container">
-      <button id="microphone-button" class="microphone-button">
-          <span class="microphone-icon">🎙️</span> Reconhecer Fala
-      </button>
-      <button id="limpar-button" class="microphone-button" style="margin-left: 10px;">
-          Limpar Pictogramas
-      </button>
+  <div class="container">
+    <div id="pictograms"></div>
+    <button id="startButton">Iniciar Reconhecimento de Voz</button>
+    <div id="result">
+      <p>Resultado do reconhecimento de voz:</p>
+      <p><span id="output"></span></p>
     </div>
   </div>
-  
 
-</div>
-    <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+  <script src="script.js"></script>
 </body>
-<div class="container">
-    <img src="logo.png" >
-</div>
-<footer style="position: fixed; bottom: 0; width: 100%; text-align: center; font-size: 10px; font-style: italic;">
-    <p>&copy;Os símbolos pictográficos utilizados são propriedade do Governo de Aragão e foram criados por Sérgio Palao para ARASAAC</p>
-    <p>  (<a href="http://www.arasaac.org">www.arasaac.org</a>), distribuídos sob uma Licença Creative Commons BY-NC-SA.</p>
-</footer>
-
-
 </html>
