@@ -1,8 +1,8 @@
 {
-  "name": "teste",
+  "name": "inocenteautista",
   "version": "1.0.0",
-  "description": "",
-  "main": "script.js",
+  "description": "pip install Flask",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -11,11 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.2",
-    "body-parser": "^1.20.2",
-    "compromise": "^14.13.0",
     "express": "^4.19.2",
-    "huggingface": "^1.4.0",
-    "natural": "^7.0.6"
+    "node-fetch": "^3.3.2"
   }
 }
