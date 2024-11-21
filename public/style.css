@@ -272,16 +272,17 @@ footer {
   justify-content: center;
   align-items: center;
   width: 70%;
-  background-color: var(--secondary-bg-collor);
+  background-color: var(--button-bg-color);
   text-align: center;
   position: fixed;
   width: 100%;
-  height: 60px;
+  height: 80px;
   bottom: 0;
 }
 
 footer p{
   width: 70vw;
+  padding: 1rem;
 
 }
 
