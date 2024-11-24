@@ -276,7 +276,7 @@ main{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 15rem;
+  padding-top: 20rem;
 }
 
 .about__container{
@@ -605,8 +605,9 @@ footer p{
 }
 
 .center-image {
+  padding-top: 10%;
   max-width: 50%;
-  height: 10cm;
+  height: auto;
 
 }
 
@@ -668,11 +669,11 @@ footer p{
   
   .main__content2__video-box{
     justify-content: center;
-    width: 50vw;
+    width: 40vw;
   }
 
   .container__img{
-    padding-top: 22rem;
+    padding-top: 25rem;
   }
 
   .welcome___acordion{
