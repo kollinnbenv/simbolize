@@ -616,8 +616,8 @@ footer p{
       justify-content: space-between;
       width: 100vw;
       background-color: var(--primary-bg-collor);
-      border: red solid 2px;
   }
+
   .header a{
     color: var(--text-color);
     font-size: 1rem;
@@ -642,12 +642,12 @@ footer p{
     display: flex;
     flex-direction: column;
     width: 100vw;
-    border: red solid 2px;
+
   }
 
   .main__content{
     padding: -5rem;
-    border: red solid 2px;
+
   }
 
   .main__content2 {
