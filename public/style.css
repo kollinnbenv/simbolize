@@ -65,6 +65,15 @@ header{
   height: 10rem;
   transition: ease-in-out .6s;
 }
+h3 {
+  font-family: 'League Spartan', Arial, sans-serif; /* Combina bem com designs divertidos */
+  font-size: 1.8rem; /* Ajusta o tamanho para melhor proporção */
+  color: #8744b9; /* Cor similar ao mascote */
+  text-align: center; /* Centraliza o texto */
+  margin-bottom: 1rem; /* Espaçamento entre o texto e o mascote */
+  letter-spacing: 0.05em; /* Suaviza a leitura */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Dá um leve destaque */
+}
 
 .navbar__box{
   display: flex;
