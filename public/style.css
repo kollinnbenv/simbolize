@@ -83,8 +83,6 @@ h3 {
   position: fixed;
   width: 70vw;
   gap: 8rem;
-
-
 }
 
 .navbar__box img{
@@ -327,18 +325,28 @@ footer p{
   }
 
   .about-section {
-    width: 90%;
+    width: 70%;
   }
 }
 
+.welcome__and__acordion{
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 70vw;
 
+}
+
+.about__container{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 .about-section {
   margin: 20px 0;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 80%;
+  border-radius: 1rem;
+  width: 95%;
   max-width: 800px;
   text-align: left;
 }
@@ -357,3 +365,93 @@ footer p{
 .about-section p, .about-section ul li {
   line-height: 1.6;
 }
+
+.equipe__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 70vw;
+  height: 80vh;
+  gap: .5rem;
+
+}
+
+.equipe__card {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  height: 495px;
+  align-items: center;
+  padding:1rem;
+  gap: 1rem;
+  border: var(--border-collor) 3px solid;
+  border-radius: 1rem;
+  
+}
+
+.equipe__foto {
+  background: #FFF;
+  display: block;
+  width: 240px;
+  height: 240px;
+  align-items: start;
+  position: relative;
+
+}
+
+.foto {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  border-radius: 1rem;
+}
+
+.equipe__habilidades{
+  display: flex;
+  flex-direction: column;
+  padding:.5rem;
+  gap: 1rem;
+}
+
+.equipe__habilidades p {
+  padding: .5rem 1rem;
+  font-weight: 600;
+  border-radius: 1rem;
+  }
+
+.equipe__habilidades .dev{
+  background-color: #FBFEB3;
+}
+
+.equipe__habilidades .designer {
+  background-color: #EFB3FE
+}
+
+.equipe__habilidades .negocios {
+  background-color: #B3FBFE;
+
+}
+
+.equipe__habilidades .educacao {
+  background-color: #FEB3B3;
+
+}
+
+.equipe__habilidades .devops{
+  background-color: #FED8B3;
+}
+
+.equipe__habilidades .a{
+  background-color: #C1B3FE;
+}
+
+.equipe__habilidades .engenharia{
+  background-color: #D8FEB3;
+
+}
+
+
+
+
