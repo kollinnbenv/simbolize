@@ -132,6 +132,15 @@ header{
   width: 40%;
 
 }
+#output {
+  text-align: center; /* Centraliza o texto dentro do elemento */
+  font-size: 1.5rem; /* Tamanho da fonte */
+  font-family: 'Inter', Arial, sans-serif; /* Fonte agradável */
+  color: var(--text-color); /* Cor do texto */
+  margin-top: 2rem; /* Espaçamento entre os pictogramas e o output */
+  display: block; /* Garante que o elemento seja tratado como um bloco */
+  width: 100%; /* Faz o texto ocupar toda a largura disponível */
+}
 
 .about__container, .text__container{
   display: flex;
