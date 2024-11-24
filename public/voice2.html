@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Inicial</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+    <header class="header">
+        <nav class="header__nav">
+            <ul class="menu menu--principal">
+                <li class="menu__item">
+                    <a class="menu__link active" href="./index2.html#home">
+                        <span class="menu__text">Home</span>
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="./index2.html#about">
+                        <span class="menu__text">Sobre</span>
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="./index2.html#text">
+                        <span class="menu__text">Texto</span>
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="./index2.html#voice">
+                        <span class="menu__text">Voz</span>
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="./index2.html#contact">
+                        <span class="menu__text">Contato</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+<!------------------logo------------------>
+        <div class="header__brand">
+            <img class="brand__logo" src="./img/Simbolize_horizontal.svg" alt="logo">
+        </div>
+<!----------------- alterna entre modo dark ou ligth--------------->
+        <div class="header__toggle">
+            <i id="toggleTheme" class="bi bi-sun"></i>
+        </div>
+    </header>
+
+<!------------------------menu bobile------------------------------->
+    <nav class="nav--mobile">
+        <ul class="menu menu--mobile">
+            <li class="menu__item">
+                <a class="menu__link active" href="./index2.html#home">
+                    <i class="menu__icon bi bi-house-door"></i>
+                    <span class="menu__text">Home</span>
+                </a>
+            </li>
+            <li class="menu__item">
+                <a class="menu__link" href="./index2.html#sobre">
+                    <i class="menu__icon bi bi-window-stack"></i>
+                    <span class="menu__text">sobre</span>
+                </a>
+            </li>
+            <li class="menu__item">
+                <a class="menu__link" href="./index2.html#busca">
+                    <i class="menu__icon bi bi-search"></i>
+                    <span class="menu__text">Buscar Picto</span>
+                </a>
+            </li>
+            <li class="menu__item">
+                <a class="menu__link" href="./index2.html#contato">
+                    <i class="menu__icon bi bi-envelope"></i>
+                    <span class="menu__text">Contato</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+<section class="voice__main__content3">          
+    <div class="voice__main_img">
+        <h3>Oi, eu sou o mascote Picto!</h3>
+        <img src="imagem.jpg" alt="Imagem de um polvo roxo com um girassol na cabeça" class="center-image">
+    </div> 
+    <div class="Container__btn__buscapicto">
+            <h5>Use o microfone para falar uma frase, que tranformo ela em pictogramas!</h5>
+        </div>
+    </div>
+    <!--------------Busca picto por Voz----------------->
+
+    <div class="voice__container">
+        <div id="pictograms">
+
+        </div>
+        <div class="input-group">
+            <div class="buttons">
+                <button id="startButton">Iniciar Reconhecimento de Voz</button>
+                <button id="clearButton">Limpar</button>
+        </div>
+    </div>
+        <h1 id="output"></h1>
+    </div>
+</section>
+</body>
+    <footer>
+        <p>
+            <strong>
+                <em>
+                    Os símbolos pictográficos usados são propriedade do Governo de Aragão e foram criados por Sérgio Palao para ARASAAC (http://www.arasaac.org), que os distribui sob uma Licença Creative Commons BY-NC-SA.
+                </em>
+            </strong>
+        </p>
+    </footer>
+
+
+        <script src="script.js"></script>
+        <script src="textScript.js"></script>
+
+    </body>
+    
+</html>
