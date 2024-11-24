@@ -605,8 +605,8 @@ footer p{
 }
 
 .center-image {
-  padding-top: 10%;
-  max-width: 50%;
+  padding-top: 0%;
+  max-width: 40%;
   height: auto;
 
 }
@@ -674,6 +674,8 @@ footer p{
 
   .container__img{
     padding-top: 25rem;
+    width: 100%;
+    height: auto;
   }
 
   .welcome___acordion{
