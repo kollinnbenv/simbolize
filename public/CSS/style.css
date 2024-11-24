@@ -276,7 +276,7 @@ main{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 12rem;
+  padding-top: 15rem;
 }
 
 .about__container{
@@ -605,8 +605,8 @@ footer p{
 }
 
 .center-image {
-  max-width: 100%;
-  height: auto;
+  max-width: 50%;
+  height: 10cm;
 
 }
 
