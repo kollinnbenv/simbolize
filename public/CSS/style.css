@@ -266,18 +266,29 @@ main{
   position: absolute;
   display: flex;
   flex-direction: column;
-  width: 80vw;
+  width: 85vw;
   z-index: 1;
   border: var(--link-color) .4rem solid;
   border-radius: .5rem;
 }
 
+.main__content3{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .container__img{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 20rem;
+  align-items: center;
+  padding-top: 12rem;
 }
+
+.center-image {
+  max-width: 85%;
+}
+
 
 .about__container{
   display: contents;
@@ -604,12 +615,7 @@ footer p{
   margin: 10px; /* Add space between pictograms */
 }
 
-.center-image {
-  padding-top: 0%;
-  max-width: 40%;
-  height: auto;
 
-}
 
 @media (min-width:768px) {
   .header {
