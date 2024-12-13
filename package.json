@@ -1,17 +1,13 @@
 {
-  "name": "inocenteautista",
-  "version": "1.0.0",
-  "description": "pip install Flask",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.19.2",
-    "node-fetch": "^3.3.2"
+    "name": "clinica-terapeutica",
+    "version": "1.0.0",
+    "main": "src/backend/server.js",
+    "scripts": {
+      "start": "node src/backend/server.js"
+    },
+    "dependencies": {
+      "cors": "^2.8.5",
+      "express": "^4.18.2"
+    }
   }
-}
+  

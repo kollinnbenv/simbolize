@@ -1,0 +1,17 @@
+[
+  {
+    "titulo": "Projeto de Estimulação Sensorial",
+    "descricao": "Atividades práticas para melhorar integração sensorial.",
+    "imagens": ["./img/projetos/sensorial1.jpg", "./img/projetos/sensorial2.jpg"]
+  },
+  {
+    "titulo": "Grupo de Habilidades Sociais",
+    "descricao": "Sessões em grupo para aprimorar comunicação e interação social.",
+    "imagens": ["./img/projetos/sociais1.jpg"]
+  },
+  {
+    "titulo": "Novo Projeto Criativo",
+    "descricao": "Explorando criatividade e artes visuais.",
+    "imagens": ["./img/projetos/arte1.jpg", "./img/projetos/arte2.jpg"]
+  }
+]
