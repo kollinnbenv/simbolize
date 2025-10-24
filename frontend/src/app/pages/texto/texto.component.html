@@ -1,0 +1,68 @@
+<div class="simbolizador-container flex-grow p-4 md:p-8">
+  <div class="w-full max-w-4xl mx-auto">
+    <!-- Card de Input -->
+    <div class="w-full bg-purple-200 rounded-xl shadow-lg p-6 md:p-8 mb-8 ">
+      <h1 class="text-3xl md:text-4xl font-bold text-purple-600 text-gray-800 mb-2">Simbolizador Inteligente</h1>
+      <p class="text-lg text-gray-600 mb-6">Digite uma frase para gerar os pictogramas contextualizados.</p>
+
+      <!-- Área de Texto -->
+      <div class="mb-4">
+        <label for="frase-texto" class="block text-sm font-medium text-gray-700 mb-2">Sua frase:</label>
+        <textarea
+          id="frase-texto"
+          rows="4"
+          [(ngModel)]="frase"
+          class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-400"
+          placeholder="Ex: O polvo foi ao banco sentar..."></textarea>
+      </div>
+
+      <!-- Botões de Ação -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Botão Secundário (Voz) — placeholder -->
+        <button class="flex-1 p-4 rounded-lg bg-gray-100 text-gray-700 font-semibold hover:bg-gray-200 transition flex items-center justify-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm-1 3a4 4 0 00-4 4v.293a1 1 0 00.293.707l1 1A1 1 0 004 13h12a1 1 0 00.707-.293l1-1a1 1 0 00.293-.707V11a4 4 0 00-4-4V7z" clip-rule="evenodd" />
+          </svg>
+          Gravar Fala
+        </button>
+
+        <!-- Botão Primário (IA) -->
+        <button (click)="gerarSimbolos()" class="flex-1 p-4 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition flex items-center justify-center gap-2 shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
+          </svg>
+          Gerar Símbolos (IA)
+        </button>
+      </div>
+
+      <div *ngIf="loading" class="mt-4 text-sm text-gray-600">Gerando símbolos…</div>
+    </div>
+
+    <!-- Prancheta de Resultados -->
+    <div class="w-full bg-purple-200 rounded-xl shadow-lg p-6 md:p-8 ">
+      <h2 class="text-2xl font-semibold text-purple-800 mb-6">Prancheta de Resultados</h2>
+
+      <!-- Grid dinamico -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-6" *ngIf="resultado?.length; else vazio">
+        <div *ngFor="let p of resultado" class="relative p-4 bg-white rounded-lg flex flex-col items-center justify-center aspect-square shadow">
+          <span *ngIf="p.context" class="absolute top-2 right-2 bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">IA</span>
+          <p class="text-blue-700 font-semibold text-lg">{{ p.context || p.term }}</p>
+          <img [src]="p.image" [alt]="p.term" class="w-16 h-16 my-2 object-contain">
+          <p class="text-gray-700">{{ p.term }}</p>
+          <span *ngIf="p.context" class="text-xs text-gray-500">Contexto: {{ p.context }}</span>
+        </div>
+      </div>
+
+      <ng-template #vazio>
+        <div class="text-gray-600">Digite uma frase e clique em <b>Gerar Símbolos</b>.</div>
+      </ng-template>
+
+      <!-- Ações da Prancheta -->
+      <div class="flex flex-col sm:flex-row gap-4 mt-4">
+        <button (click)="limpar()" class="flex-1 p-3 rounded-lg bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition">Limpar</button>
+        <button (click)="exportar()" class="flex-1 p-3 rounded-lg bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition">Exportar</button>
+        <button class="flex-1 p-3 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition">Salvar na Biblioteca</button>
+      </div>
+    </div>
+  </div>
+</div>

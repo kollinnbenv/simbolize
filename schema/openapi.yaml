@@ -1,0 +1,29 @@
+openapi: 3.0.3
+info:
+  title: Simbolize API
+  version: 1.0.0
+paths:
+  /healthz:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /pictos/search:
+    get:
+      summary: Busca pictogramas
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Resultado da busca
+  /tts:
+    post:
+      summary: Texto para fala
+  /stt:
+    post:
+      summary: Fala para texto

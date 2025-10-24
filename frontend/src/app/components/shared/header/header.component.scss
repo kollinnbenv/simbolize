@@ -1,0 +1,10 @@
+:host {
+  display: block; 
+}
+
+.main-header {
+  /* Esta é a regra que estava causando o erro no HTML.
+     Aqui no SCSS, ela é 100% segura.
+  */
+  height: 64px; 
+}
