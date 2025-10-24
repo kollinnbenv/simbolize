@@ -1,11 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../environment/development';
+import { environment } from '../../../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private http = inject(HttpClient);
-  private base = environment.apiBaseUrl;
+private base = environment.apiBaseUrl || '';
+  getPictos(q: string) {
+    return this.http.get(`${this.base}/pictos/search`, { params: { q } });
+  }
 
   get<T>(path: string, params?: Record<string, string | number>) {
     let httpParams = new HttpParams();

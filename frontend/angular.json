@@ -48,6 +48,12 @@
                   "maximumError": "4kb"
                 }
               ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environment/environment.ts",
+                  "with": "src/environment/environment.prd.ts"
+                }
+              ],
               "outputHashing": "all"
             },
             "development": {
@@ -92,13 +98,17 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
-          }
-        }
-      }
-    }
-  },
   "cli": {
     "analytics": false
   }
+}
+    "with": "src/environments/environment.prod.ts"
+  }
+]
+
+  
+}
+,
+"cli": {
+  "analytics": false
 }

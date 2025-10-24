@@ -1,46 +1,43 @@
-
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { PictosService, Pictogram } from '../../core/services/pictos.service';
+import { Component } from '@angular/core';
+import { PictosService, Picto } from '../../core/services/pictos.service';
 
 @Component({
   selector: 'app-texto',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './texto.component.html',
-  styleUrl: './texto.component.scss'
+  // styleUrls: ['./texto.component.css'] // se existir o css
 })
-
 export class TextoComponent {
-  private pictos = inject(PictosService);
-
   frase = '';
   loading = false;
-  resultado: Pictogram[] = [];
+  errorMsg = '';
+  pics: Picto[] = [];
+
+  currentYear = new Date().getFullYear();
+
+  constructor(private pictos: PictosService) {}
 
   gerarSimbolos() {
-    const q = this.frase?.trim();
-    if (!q) { this.resultado = []; return; }
+    this.errorMsg = '';
+    this.pics = [];
+    const q = (this.frase || '').trim();
+
+    if (!q) {
+      this.errorMsg = 'Digite uma frase para gerar os símbolos.';
+      return;
+    }
 
     this.loading = true;
-    this.pictos.search(q).subscribe({
-      next: (res) => { this.resultado = res; this.loading = false; },
-      error: () => { this.resultado = []; this.loading = false; }
+
+    this.pictos.searchChosen(q).subscribe({
+      next: (res: Picto[]) => {
+        this.pics = res ?? [];
+        this.loading = false;
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.errorMsg = 'Não foi possível gerar os símbolos agora.';
+        this.loading = false;
+      }
     });
-  }
-
-  limpar() {
-    this.frase = '';
-    this.resultado = [];
-  }
-
-  exportar() {
-    // MVP: exportar como JSON baixável
-    const blob = new Blob([JSON.stringify(this.resultado, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'simbolos.json'; a.click();
-    URL.revokeObjectURL(url);
   }
 }
