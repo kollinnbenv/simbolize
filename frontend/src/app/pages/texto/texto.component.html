@@ -1,0 +1,92 @@
+<div class="simbolizador-container flex-grow p-4 md:p-8">
+  <div class="w-full max-w-4xl mx-auto">
+    <!-- Card de Input -->
+    <div class="w-full bg-purple-200 rounded-xl shadow-lg p-6 md:p-8 mb-8 ">
+      <h1 class="text-3xl md:text-4xl font-bold text-purple-600 text-gray-800 mb-2">Simbolizador Inteligente</h1>
+      <p class="text-lg text-gray-600 mb-6">Digite uma frase para gerar os pictogramas contextualizados.</p>
+
+ <!-- Campo de texto (frase) -->
+<div class="w-full mb-4">
+  <label class="block text-sm font-medium text-gray-700 mb-2">Digite a frase</label>
+  <input
+    type="text"
+    [(ngModel)]="frase"
+    placeholder="Ex.: quero ir ao parque com meu cachorro"
+    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+  />
+</div>
+
+<!-- Ações -->
+<div class="flex gap-3">
+  <!-- Botão Primário (IA) -->
+  <button
+    (click)="gerarSimbolos()"
+    [disabled]="loading"
+    class="flex-1 p-4 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition flex items-center justify-center gap-2 shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
+    </svg>
+    Gerar Símbolos (IA)
+  </button>
+</div>
+
+<!-- Estados -->
+<div *ngIf="loading" class="mt-4 text-sm text-gray-600">
+  Gerando símbolos…
+</div>
+<div *ngIf="!loading && errorMsg" class="mt-4 text-sm text-red-600">
+  {{ errorMsg }}
+</div>
+
+<!-- Prancheta de Resultados -->
+<div class="w-full bg-purple-200 rounded-xl shadow-lg p-6 md:p-8 mt-6">
+  <h2 class="text-2xl font-semibold text-purple-800 mb-6">Prancheta de Resultados</h2>
+
+<div *ngIf="!loading && !errorMsg && pics.length === 0" class="text-gray-700">
+    Nenhum símbolo gerado ainda. Digite uma frase e clique em “Gerar Símbolos (IA)”.
+  </div>
+
+<div *ngIf="pics.length > 0" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <div *ngFor="let p of pics" class="bg-white rounded-lg p-3 shadow flex flex-col items-center">
+      <img
+        *ngIf="p.image?.png"
+        [src]="p.image.png"
+        [alt]="p.label || ('Pictograma ' + p.id)"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        class="w-full h-auto"
+      />
+      <div class="mt-2 text-xs text-gray-700 text-center truncate w-full" [title]="p.label || ('#' + p.id)">
+        {{ p.label || ('#' + p.id) }}
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<!-- Rodapé / Licenças -->
+<footer class="mt-10 text-center text-xs text-gray-600">
+  <div class="flex flex-col items-center gap-1">
+    <div>© {{ currentYear }} Simbolize — tecnologia assistiva livre</div>
+    <div class="max-w-3xl leading-relaxed">
+      Pictogramas de <strong>Sergio Palao</strong> para
+      <a
+        href="https://arasaac.org"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline hover:no-underline text-purple-800"
+        >ARASAAC</a
+      >, licenciados sob
+      <a
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline hover:no-underline text-purple-800"
+        >CC BY-NC-SA 4.0</a
+      >. &nbsp;— &nbsp;© Governo de Aragão.
+    </div>
+  </div>
+</footer>

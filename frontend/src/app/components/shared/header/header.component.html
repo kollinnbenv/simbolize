@@ -1,0 +1,54 @@
+<header class="main-header bg-white p-4 shadow-sm flex items-center bg-purple-50 justify-between z-10 sticky top-0">
+
+  <!-- Logo e Nome -->
+  <div class="flex items-center space-x-2">
+    <!-- Substitua 'logo.png' pelo seu logo real -->
+    <img src="assets/icons8-diálogo-64.png" alt="Simbolize Logo" class="h-7 w-7"> 
+    <div>
+      <span class="text-purple-600 font-bold text-3xl">Simbolize</span>
+      <span class="block text-gray-800 text-xs text-black-900 font-semibold hidden md:block">comunicação não verbal</span>
+    </div>
+  </div>
+
+  <!-- Navegação Principal (Desktop) -->
+   <nav class="hidden md:flex items-center space-x-4">
+
+    <a routerLink="/" 
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2"
+       [routerLinkActiveOptions]="{ exact: true }">Home</a>
+
+       
+    <a routerLink="/sobre" 
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2">Sobre</a>
+       
+    <a routerLink="/texto" 
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2">Texto</a>
+       
+    <a routerLink="/voz" 
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2">Voz</a>
+       
+    <a routerLink="/contato" 
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2">Contato</a>
+    
+    <!-- Botão de Modo Escuro (Exemplo) -->
+    <!-- <button class="ml-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 00-.707-.707l-.707.707a1 1 0 00.707.707l.707-.707zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-5-8a1 1 0 10-2 0v1a1 1 0 102 0V3zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zm9.464 4.95l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM6 10a4 4 0 11-8 0 4 4 0 018 0z"/>
+      </svg>
+      <span class="sr-only">Modo Escuro</span>
+    </button> -->
+  </nav>
+
+  <!-- Botão de Menu (Mobile) -->
+  <button class="md:hidden p-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <span class="sr-only">Abrir Menu</span>
+  </button>
+</header>

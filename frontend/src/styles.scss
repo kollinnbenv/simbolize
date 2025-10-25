@@ -1,0 +1,9 @@
+/* src/styles.scss */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Adicione o fundo claro global aqui */
+body {
+  background-color: #F3F4F6; /* bg-gray-100 */
+}

@@ -1,0 +1,67 @@
+<div class="login-container flex-grow flex flex-col md:flex-row bg-purple-50 items-center justify-center p-4">
+ <!-- Coluna da Esquerda (Formulário) -->
+  <div class="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center mb-8 md:mb-0 md:pr-8">
+    <div class="w-full max-w-md bg-purple-100 rounded-xl shadow-lg p-6 sm:p-8 md:p-10">
+      
+        <!-- versao mobile -->
+      <div class="flex items-start space-x-2 mb-8 md:hidden">
+        <img src="assets/polvo-sem-fundo-branco.png" alt="Simbolize Logo" class="h-20 w-20">
+        <div>
+            <span class="block  text-purple-900 font-bold text-5xl">Simbolize</span>
+            <span class="block text-gray-700 text-xs font-semibold text-2xl">Comunicação não verbal</span>
+        </div>
+      </div>
+
+      <h2 class="text-2xl font-semibold text-purple-700 text-center md:text-left mb-6">Acesse sua conta</h2>
+
+      <form class="space-y-5">
+        <div>
+          <label for="email" class="block text-sm font-medium text-purple-900 mb-2">E-mail</label>
+          <input 
+            type="email" 
+            id="email" 
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-400 focus:border-transparent transition" 
+            placeholder="seuemail@exemplo.com">
+        </div>
+        <div>
+          <label for="password" class="block text-sm font-medium text-purple-900 mb-2">Senha</label>
+          <input 
+            type="password" 
+            id="password" 
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-400 focus:border-transparent transition" 
+            placeholder="••••••••">
+        </div>
+
+        <div class="flex items-center justify-between text-sm">
+          <a href="#" class="font-medium text-purple-600 hover:text-purple-800 transition">Esqueci minha senha</a>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-purple-700 transition transform hover:-translate-y-0.5">
+          Entrar
+        </button>
+      </form>
+
+      <div class="mt-8 text-center text-sm">
+        <p class="text-gray-600">Ainda não tem conta? 
+          <a href="#" class="font-medium text-purple-600 hover:text-purple-800 transition">Cadastre-se</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hidden md:flex md:w-1/2 lg:w-3/5 flex-col items-center justify-center md:pl-8 text-center bg-purple-300 p-8 rounded-xl">
+    <img src="assets/polvo-sem-fundo-branco.png" alt="Polvo Simbolize" class="max-w-xs lg:max-w-sm h-auto mb-6"> 
+    <div class="max-w-lg">
+      <h3 class="text-3xl lg:text-3xl font-bold text-gray-800 mb-4">
+        Compreendendo e apoiando a <span class="text-purple-600">expressão não verbal</span>
+      </h3>
+      <p class="text-gray-800 leading-relaxed text-xl">
+        A comunicação vai muito além das palavras. Para muitas <span class="text-purple-600 font-medium">pessoas autistas</span>, expressar-se verbalmente é desafiador. O Simbolize ajuda a reconhecer, interpretar e facilitar a comunicação não verbal de forma respeitosa e acessível.
+      </p>
+    </div>
+  </div>
+
+</div>

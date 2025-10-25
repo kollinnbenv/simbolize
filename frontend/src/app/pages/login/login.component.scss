@@ -1,0 +1,10 @@
+:host {
+  display: block; 
+}
+
+.login-container {
+  /* Isso faz a página de login ocupar 100% da altura da tela,
+    MENOS os 64px do seu <app-header>.
+  */
+  min-height: calc(100vh - 64px); 
+}
