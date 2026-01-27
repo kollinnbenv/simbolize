@@ -98,26 +98,13 @@
             "styles": [
               "src/styles.scss"
             ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
   "cli": {
     "analytics": false
   }
-}
-    "with": "src/environments/environment.prod.ts"
-  }
-]
-
-  
-}
-,
-"cli": {
-  "analytics": false
-},
-"cli": {
-  "analytics": false
-},
-"cli": {
-  "analytics": false
-},
-"cli": {
-  "analytics": false
 }

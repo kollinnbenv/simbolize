@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { PictosService, Picto } from '../../core/services/pictos.service';
 
 @Component({
   selector: 'app-texto',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './texto.component.html',
   // styleUrls: ['./texto.component.css'] // se existir o css
 })
