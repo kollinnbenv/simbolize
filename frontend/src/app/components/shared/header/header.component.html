@@ -1,7 +1,9 @@
-<header class="main-header bg-white p-4 shadow-sm flex items-center bg-purple-50 justify-between z-10 sticky top-0">
+<header
+  #headerRoot
+  class="main-header bg-white p-4 shadow-sm flex items-center bg-purple-50 justify-between z-10 sticky top-0 relative">
 
   <!-- Logo e Nome -->
-  <div class="flex items-center space-x-2">
+  <div #logoArea class="flex items-center space-x-2">
     <!-- Substitua 'logo.png' pelo seu logo real -->
     <img src="assets/icons8-diálogo-64.png" alt="Simbolize Logo" class="h-7 w-7"> 
     <div>
@@ -11,7 +13,12 @@
   </div>
 
   <!-- Navegação Principal (Desktop) -->
-   <nav class="hidden md:flex items-center space-x-4">
+   <nav
+     #desktopNav
+     class="flex items-center space-x-4"
+     [class.nav-collapsed]="showHamburger"
+     [attr.aria-hidden]="showHamburger"
+     aria-label="Navegação principal">
 
     <a routerLink="/" 
        class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
@@ -45,10 +52,53 @@
   </nav>
 
   <!-- Botão de Menu (Mobile) -->
-  <button class="md:hidden p-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition">
+  <button
+      *ngIf="showHamburger"
+      #menuButton
+      type="button"
+      class="p-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
+      (click)="toggleMenu()"
+      (keydown.enter)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen"
+      aria-controls="primary-menu"
+      aria-haspopup="true">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
-      <span class="sr-only">Abrir Menu</span>
+      <span class="sr-only">Alternar menu</span>
   </button>
 </header>
+
+<div
+  *ngIf="showHamburger && menuOpen"
+  #menuPanel
+  id="primary-menu"
+  class="bg-purple-50 border-b border-purple-100 shadow-sm">
+  <nav class="flex flex-col gap-2 px-4 pb-4" aria-label="Menu">
+    <a routerLink="/"
+       (click)="closeMenu()"
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2"
+       [routerLinkActiveOptions]="{ exact: true }">Home</a>
+
+    <a routerLink="/sobre"
+       (click)="closeMenu()"
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2">Sobre</a>
+
+    <a routerLink="/texto"
+       (click)="closeMenu()"
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2">Texto</a>
+
+    <a routerLink="/voz"
+       (click)="closeMenu()"
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2">Voz</a>
+
+    <a routerLink="/contato"
+       (click)="closeMenu()"
+       class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 font-medium hover:bg-gray-200 transition"
+       routerLinkActive="bg-purple-600 text-white ring-2 ring-purple-600 ring-offset-2">Contato</a>
+  </nav>
+</div>

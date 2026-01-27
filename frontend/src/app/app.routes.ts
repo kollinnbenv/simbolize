@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component'; // 1. IMPORTE AQUI
-import { HeaderComponent } from './components/shared/header/header.component';
 import { SobreComponent } from './pages/sobre/sobre.component';
 import { ContatoComponent } from './pages/contato/contato.component';
 import { TextoComponent } from './pages/texto/texto.component';
@@ -11,10 +10,6 @@ export const routes: Routes = [
   {
     path: '', // Rota principal (sem nada, ex: localhost:4200)
     component: LoginComponent
-  },
-  {
-    path: '', // Rota principal (sem nada, ex: localhost:4200)
-    component: HeaderComponent
   },
   {
     path: 'sobre', // Rota link sobre (ex: localhost:4200/sobre)

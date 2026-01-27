@@ -8,3 +8,12 @@
   */
   height: 64px; 
 }
+
+.nav-collapsed {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  right: 0;
+  top: 0;
+}
