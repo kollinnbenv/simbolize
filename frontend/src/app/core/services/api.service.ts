@@ -5,9 +5,14 @@ import { environment } from '../../../environment/environment';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private http = inject(HttpClient);
-private base = environment.apiBaseUrl || '';
+  private base = (environment.apiBaseUrl || '').replace(/\/+$/, '');
+
+  private url(path: string) {
+    return `${this.base}${path.startsWith('/') ? path : `/${path}`}`;
+  }
+
   getPictos(q: string) {
-    return this.http.get(`${this.base}/pictos/search`, { params: { q } });
+    return this.http.get(this.url('/pictos/search'), { params: { q } });
   }
 
   get<T>(path: string, params?: Record<string, string | number>) {
@@ -15,10 +20,10 @@ private base = environment.apiBaseUrl || '';
     if (params) {
       Object.entries(params).forEach(([k, v]) => httpParams = httpParams.set(k, String(v)));
     }
-    return this.http.get<T>(`${this.base}${path}`, { params: httpParams });
+    return this.http.get<T>(this.url(path), { params: httpParams });
   }
 
   post<T>(path: string, body: any) {
-    return this.http.post<T>(`${this.base}${path}`, body);
+    return this.http.post<T>(this.url(path), body);
   }
 }

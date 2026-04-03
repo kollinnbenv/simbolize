@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"net/url"
@@ -14,6 +15,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 // ---------- HTTP client ----------
@@ -30,6 +32,28 @@ var httpClient = &http.Client{
 		TLSHandshakeTimeout:   5 * time.Second,
 		ExpectContinueTimeout: 1 * time.Second,
 	},
+}
+
+const (
+	defaultARASAACBaseURL   = "https://api.arasaac.org/api"
+	defaultLang             = "pt"
+	maxQueryRunes           = 120
+	maxUpstreamResponseSize = int64(2 << 20) // 2 MiB
+	maxUpstreamItems        = 200
+)
+
+var (
+	reJuice = regexp.MustCompile(`\b(?:suco|sumo)\s+de\s+([a-zãõâêîôûáéíóúç\s-]+)`)
+	reSafeQ = regexp.MustCompile(`^[\p{L}\p{N}\s.,;:!?()'"-]+$`)
+)
+
+var allowedLangs = map[string]struct{}{
+	"pt": {},
+	"en": {},
+	"es": {},
+	"fr": {},
+	"it": {},
+	"de": {},
 }
 
 // ---------- Tipos (mínimos) do ARASAAC ----------
@@ -130,8 +154,6 @@ func min(a, b float64) float64 {
 }
 
 // ---------- Intent + extrações ----------
-var reJuice = regexp.MustCompile(`\b(?:suco|sumo)\s+de\s+([a-zãõâêîôûáéíóúç\s-]+)`)
-
 // retorna (intent, frutaAlvo | "")
 func detectIntentAndFruit(q string) (string, string) {
 	t := strings.ToLower(q)
@@ -366,10 +388,85 @@ func buildImageURLs(id int) (png300, svg string) {
 	return png, svg
 }
 
+func normalizeQuery(raw string) (string, error) {
+	q := strings.TrimSpace(raw)
+	if q == "" {
+		return "", errors.New("missing query param: q")
+	}
+	if utf8.RuneCountInString(q) > maxQueryRunes {
+		return "", errors.New("query param q is too long")
+	}
+	if !reSafeQ.MatchString(q) {
+		return "", errors.New("query param q contains unsupported characters")
+	}
+	return q, nil
+}
+
+func normalizeLang(raw string) (string, error) {
+	lang := strings.ToLower(strings.TrimSpace(raw))
+	if lang == "" {
+		return defaultLang, nil
+	}
+	lang = strings.ReplaceAll(lang, "_", "-")
+	if lang == "br" || lang == "pt-br" {
+		return "pt", nil
+	}
+	if _, ok := allowedLangs[lang]; !ok {
+		return "", errors.New("unsupported query param: lang")
+	}
+	return lang, nil
+}
+
+func resolveARASAACBaseURL() string {
+	base := strings.TrimSpace(os.Getenv("ARASAAC_BASE_URL"))
+	if base == "" {
+		return defaultARASAACBaseURL
+	}
+
+	u, err := url.Parse(base)
+	if err != nil || u.Host == "" {
+		log.Printf("invalid ARASAAC_BASE_URL, using default")
+		return defaultARASAACBaseURL
+	}
+
+	host := strings.ToLower(u.Hostname())
+	scheme := strings.ToLower(u.Scheme)
+
+	allowedHosts := map[string]struct{}{
+		"api.arasaac.org": {},
+		"localhost":       {},
+		"127.0.0.1":       {},
+	}
+	for _, item := range strings.Split(os.Getenv("ARASAAC_ALLOWED_HOSTS"), ",") {
+		h := strings.ToLower(strings.TrimSpace(item))
+		if h != "" {
+			allowedHosts[h] = struct{}{}
+		}
+	}
+
+	if _, ok := allowedHosts[host]; !ok {
+		log.Printf("ARASAAC_BASE_URL host is not allowed, using default")
+		return defaultARASAACBaseURL
+	}
+
+	if scheme != "https" {
+		if !(scheme == "http" && (host == "localhost" || host == "127.0.0.1")) {
+			log.Printf("ARASAAC_BASE_URL must use HTTPS (except localhost), using default")
+			return defaultARASAACBaseURL
+		}
+	}
+
+	u.RawQuery = ""
+	u.Fragment = ""
+	u.User = nil
+	return strings.TrimRight(u.String(), "/")
+}
+
 // ---------- Chamada ARASAAC ----------
 func fetchArasaac(ctx context.Context, base, lang, q string) ([]arasaacItem, string, error) {
 	escapedQ := url.PathEscape(q)
-	urlFinal := base + "/v1/pictograms/" + url.PathEscape(lang) + "/search/" + escapedQ
+	urlFinal := base + "/pictograms/" + url.PathEscape(lang) + "/search/" + escapedQ
+	// #nosec G107 -- URL base é validada por allowlist em resolveARASAACBaseURL.
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, urlFinal, nil)
 	if err != nil {
 		return nil, urlFinal, err
@@ -381,31 +478,33 @@ func fetchArasaac(ctx context.Context, base, lang, q string) ([]arasaacItem, str
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		b, _ := io.ReadAll(io.LimitReader(resp.Body, 8<<10))
-		return nil, urlFinal, errors.New(resp.Status + " " + string(b))
+		_, _ = io.Copy(io.Discard, io.LimitReader(resp.Body, 8<<10))
+		return nil, urlFinal, errors.New(resp.Status)
 	}
 	var items []arasaacItem
-	if err := json.NewDecoder(resp.Body).Decode(&items); err != nil {
+	if err := json.NewDecoder(io.LimitReader(resp.Body, maxUpstreamResponseSize)).Decode(&items); err != nil {
 		return nil, urlFinal, err
+	}
+	if len(items) > maxUpstreamItems {
+		items = items[:maxUpstreamItems]
 	}
 	return items, urlFinal, nil
 }
 
 // ---------- Handler principal ----------
 func PictosSearchHandler(w http.ResponseWriter, r *http.Request) {
-	q := r.URL.Query().Get("q")
-	if q == "" {
-		http.Error(w, "missing query param: q", http.StatusBadRequest)
+	q, err := normalizeQuery(r.URL.Query().Get("q"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	lang := r.URL.Query().Get("lang")
-	if lang == "" {
-		lang = "br"
+
+	lang, err := normalizeLang(r.URL.Query().Get("lang"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
-	base := os.Getenv("ARASAAC_BASE_URL")
-	if base == "" {
-		base = "https://api.arasaac.org"
-	}
+	base := resolveARASAACBaseURL()
 
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
@@ -413,7 +512,8 @@ func PictosSearchHandler(w http.ResponseWriter, r *http.Request) {
 	// 1) busca principal
 	items, mainURL, err := fetchArasaac(ctx, base, lang, q)
 	if err != nil {
-		http.Error(w, "failed to call ARASAAC: "+err.Error(), http.StatusBadGateway)
+		log.Printf("ARASAAC upstream request failed (query=%q lang=%q source=%s): %v", q, lang, mainURL, err)
+		http.Error(w, "upstream service unavailable", http.StatusBadGateway)
 		return
 	}
 
@@ -502,7 +602,7 @@ func PictosSearchHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	out := RankedResponse{
-		Source:       mainURL,
+		Source:       "arasaac",
 		Input:        q,
 		Intent:       intent,
 		Chosen:       chosen,
@@ -511,9 +611,9 @@ func PictosSearchHandler(w http.ResponseWriter, r *http.Request) {
 	out.License.Name = "CC BY-NC-SA 4.0"
 	out.License.Attribution = "Pictograms by Sergio Palao, © Gobierno de Aragón (ARASAAC)"
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("Cache-Control", "no-store")
 	enc := json.NewEncoder(w)
-	enc.SetEscapeHTML(false)
 	if err := enc.Encode(out); err != nil && !errors.Is(err, context.Canceled) {
 		http.Error(w, "failed to encode response", http.StatusInternalServerError)
 		return
